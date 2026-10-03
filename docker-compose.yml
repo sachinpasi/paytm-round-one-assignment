@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: seatres
+      POSTGRES_PASSWORD: seatres
+      POSTGRES_DB: seatres
+    ports:
+      - '5432:5432' # for psql / DBeaver
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U seatres -d seatres']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # docker compose up --build runs everything; with npm run dev, start only the db: docker compose up -d db
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://seatres:seatres@db:5432/seatres
+      JWT_SECRET: local-docker-secret-change-me
+      ADMIN_KEY: demo-admin-key
+    ports:
+      - '3000:3000'
