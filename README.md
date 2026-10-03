@@ -8,6 +8,15 @@ A seat is never sold twice, nobody can exceed their booking limit, retries do no
 
 How and why it works: [WRITEUP.md](WRITEUP.md).
 
+## Live service
+
+* URL: https://paytm-round-one-assignment.onrender.com
+* Readiness: `/readyz`. Metrics: `/metrics`.
+* Run the burst against it: `./burst.sh https://paytm-round-one-assignment.onrender.com`
+* To create a show you need an admin token: `POST /auth/token` with `{"user_id":"admin","admin_key":"demo-admin-key"}`. The demo key is public on purpose.
+
+It runs on Render's free plan in Singapore (about 0.1 CPU), so it is much slower than a laptop. A free instance also sleeps when idle, and the first request after a quiet period can take about a minute.
+
 ## Run it
 
 ```sh

@@ -100,6 +100,15 @@ Local Docker testing produced:
 
 With a deliberately constrained database pool, excess traffic was shed with 429 while maintaining zero 5xx and passing the safety checks.
 
+The same burst against the live deployment (https://paytm-round-one-assignment.onrender.com, Render free plan, Singapore, about 0.1 CPU):
+
+* **19,792 requests, 200 at a time, in 155 seconds (about 127 requests/sec)**
+* **p50 about 1.3 s, p99 about 5.2 s**
+* **0 5xx and no failed requests**
+* **19/19 safety checks passed**, including `/metrics` matching the client-side counts
+
+The free instance is CPU-limited, so throughput is far lower than locally, but correctness and the zero-5xx behaviour held.
+
 ## AI usage
 
 I used Claude Code as a development assistant to speed up implementation, explore approaches and handle repetitive coding.
